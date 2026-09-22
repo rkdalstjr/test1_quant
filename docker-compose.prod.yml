@@ -1,0 +1,145 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: investment_backend
+    restart: unless-stopped
+    ports:
+      - "8801:8000"
+    env_file:
+      - app/backend/.env
+    environment:
+      - MONGODB_URL=mongodb://mongo:27017
+      - MONGODB_DB=investment_db
+      - QDRANT_URL=http://qdrant:6333
+      - QDRANT_COLLECTION=investment_docs                    # ← 추가
+      - MEILI_URL=http://meilisearch:7700
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY:-local-development-search-key-change-me}
+      - RAG_LLM_API_KEY=ollama                               # ← 빈 값 → "ollama"
+      - RAG_EMBEDDING_PROVIDER=ollama
+      - RAG_EMBEDDING_URL=http://ollama:11434/api/embed      # ← 추가 (필수!)
+      - RAG_EMBEDDING_MODEL=embeddinggemma                   # ← nomic-embed-text → embeddinggemma
+      - RAG_EMBEDDING_TIMEOUT_SECONDS=180                    # ← 추가
+      - RAG_LLM_BASE_URL=http://ollama:11434/v1              # ← /v1 추가 필수!
+      - RAG_LLM_MODEL=qwen3:4b                               # ← llama3.1:8b → qwen3:4b
+      - RAG_LLM_TIMEOUT_SECONDS=180                          # ← 추가
+    depends_on:
+      mongo:
+        condition: service_started
+      qdrant:
+        condition: service_started
+      meilisearch:
+        condition: service_started
+      ollama:
+        condition: service_healthy
+    networks:
+      - investment-net
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: investment_ollama
+    restart: unless-stopped
+    volumes:
+      - investment_ollama_data:/root/.ollama
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    networks:
+      - investment-net
+
+  ollama-init:
+    profiles: ["ollama-init"]
+    image: ollama/ollama:latest
+    restart: "no"
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+    depends_on:
+      ollama:
+        condition: service_healthy
+    entrypoint: ["/bin/sh", "-ec"]
+    command:
+      - "ollama pull ${RAG_EMBEDDING_MODEL:-embeddinggemma} && ollama pull ${RAG_LLM_MODEL:-qwen3:4b}"
+    networks:
+      - investment-net
+
+  docs-index:
+    profiles: ["tools"]
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: "no"
+    environment:
+      QDRANT_URL: http://qdrant:6333
+      QDRANT_COLLECTION: ${QDRANT_COLLECTION:-investment_docs}
+      RAG_EMBEDDING_PROVIDER: ollama
+      RAG_EMBEDDING_URL: http://ollama:11434/api/embed
+      RAG_EMBEDDING_MODEL: ${RAG_EMBEDDING_MODEL:-embeddinggemma}
+      RAG_EMBEDDING_TIMEOUT_SECONDS: 180
+    volumes:
+      - ./docs:/app/docs:ro
+    depends_on:
+      qdrant:
+        condition: service_started
+      ollama:
+        condition: service_healthy
+    command: ["/app/scripts/upload_docs_to_qdrant.sh"]
+    networks:
+      - investment-net
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: investment_ollama
+    restart: unless-stopped
+    volumes:
+      - investment_ollama_data:/root/.ollama
+    networks:
+      - investment-net
+
+  mongo:
+    image: mongo:7
+    container_name: investment_mongo
+    restart: unless-stopped
+    volumes:
+      - investment_mongo_data:/data/db
+    networks:
+      - investment-net
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: investment_qdrant
+    restart: unless-stopped
+    volumes:
+      - investment_qdrant_data:/qdrant/storage
+    networks:
+      - investment-net
+
+  meilisearch:
+    image: getmeili/meilisearch:v1.15.2
+    container_name: investment_meilisearch
+    restart: unless-stopped
+    environment:
+      MEILI_ENV: production
+      MEILI_MASTER_KEY: ${MEILI_MASTER_KEY:-local-development-search-key-change-me}
+    volumes:
+      - investment_meilisearch_data:/meili_data
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:7700/health >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+    networks:
+      - investment-net
+
+networks:
+  investment-net:
+    driver: bridge
+
+volumes:
+  investment_mongo_data:
+  investment_qdrant_data:
+  investment_meilisearch_data:
+  investment_ollama_data:
