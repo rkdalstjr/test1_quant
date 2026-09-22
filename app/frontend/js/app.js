@@ -1,62 +1,62 @@
-import { homeView }            from './views/home.js';
+import { homeView } from './views/home.js';
 import { serverResourcesView } from './views/serverResources.js';
-import { volumeCloudView }    from './views/volumeCloud.js';
-import { sectorCloudView }    from './views/sectorCloud.js';
-import { worldMarketsView }   from './views/worldMarkets.js';
-import { assetClassesView }   from './views/assetClasses.js';
-import { todayGainersView }   from './views/todayGainers.js';
-import { todaySobujangView }  from './views/todaySobujang.js';
+import { volumeCloudView } from './views/volumeCloud.js';
+import { sectorCloudView } from './views/sectorCloud.js';
+import { worldMarketsView } from './views/worldMarkets.js';
+import { assetClassesView } from './views/assetClasses.js';
+import { todayGainersView } from './views/todayGainers.js';
+import { todaySobujangView } from './views/todaySobujang.js';
 import { globalCapitalMapView } from './views/globalCapitalMap.js';
 import { crossValidationView } from './views/crossValidation.js';
 import { decisionBoundaryView } from './views/decisionBoundary.js';
-import { randomForestView }    from './views/randomForest.js';
-import { kmeansView }          from './views/kmeans.js';
-import { svmView }             from './views/svm.js';
-import { mlpView }             from './views/mlp.js';
+import { randomForestView } from './views/randomForest.js';
+import { kmeansView } from './views/kmeans.js';
+import { svmView } from './views/svm.js';
+import { mlpView } from './views/mlp.js';
 import { linearRegressionView } from './views/linearRegression.js';
-import { textClassifyView }    from './views/textClassify.js';
-import { opencvView }          from './views/opencv.js';
-import { cnnTimeseriesView }   from './views/cnnTimeseries.js';
-import { lstmView }            from './views/lstm.js';
-import { transformerView }     from './views/transformer.js';
-import { backtestView }        from './views/backtest.js';
-import { quantView }           from './views/quant.js';
-import { portfolioView }       from './views/portfolio.js';
+import { textClassifyView } from './views/textClassify.js';
+import { opencvView } from './views/opencv.js';
+import { cnnTimeseriesView } from './views/cnnTimeseries.js';
+import { lstmView } from './views/lstm.js';
+import { transformerView } from './views/transformer.js';
+import { backtestView } from './views/backtest.js';
+import { quantView } from './views/quant.js';
+import { portfolioView } from './views/portfolio.js';
 import { portfolioCombinationView } from './views/portfolioCombination.js';
 import { portfolioGuideView } from './views/portfolioGuide.js';
 import { portfolioRegimeView } from './views/portfolioRegime.js';
 import { portfolioSimulationView } from './views/portfolioSimulation.js';
-import { pipelineView }        from './views/pipeline.js';
-import { riskView }            from './views/risk.js';
-import { huggingfaceView }     from './views/huggingface.js';
-import { macroRealtimeView }    from './views/macroRealtime.js';
-import { kospiExcludedView }   from './views/kospiExcluded.js';
-import { macroSimulationView }  from './views/macroSimulation.js';
+import { pipelineView } from './views/pipeline.js';
+import { riskView } from './views/risk.js';
+import { huggingfaceView } from './views/huggingface.js';
+import { macroRealtimeView } from './views/macroRealtime.js';
+import { kospiExcludedView } from './views/kospiExcluded.js';
+import { macroSimulationView } from './views/macroSimulation.js';
 import { industryAnalysisView } from './views/industryAnalysis.js';
 import { financialStatementView } from './views/financialStatement.js';
 import { dartCompanySearchView } from './views/dartCompanySearch.js';
-import { dartRegionSearchView }  from './views/dartRegionSearch.js';
-import { groupNetworkView }      from './views/groupNetwork.js';
-import { valuationView }        from './views/valuation.js';
-import { technicalChartView }  from './views/technicalChart.js';
+import { dartRegionSearchView } from './views/dartRegionSearch.js';
+import { groupNetworkView } from './views/groupNetwork.js';
+import { valuationView } from './views/valuation.js';
+import { technicalChartView } from './views/technicalChart.js';
 import { financialKnowledgeView } from './views/financialKnowledge.js';
-import { investmentTreeView }   from './views/investmentTree.js';
+import { investmentTreeView } from './views/investmentTree.js';
 import { quizHomeView, quizDayView } from './views/quiz.js';
 import { vocabularyExamView } from './views/vocabularyExam.js';
 import { ragChatView } from './views/ragChat.js';
 import { llmBenchView } from './views/llmBenchView.js';
 import { companyFinancialView } from './views/companyFinancial.js';
 // 학습 화면 오류 수정본을 기존 ES 모듈 캐시와 분리해 항상 새로 불러온다.
-import { learnView }            from './views/learn.js?v=35';
-import { taxAccountingView }         from './views/taxAccounting.js';
+import { learnView } from './views/learn.js?v=35';
+import { taxAccountingView } from './views/taxAccounting.js';
 import { dartFinancialAnalysisView } from './views/dartFinancialAnalysis.js';
-import { api }                 from './api.js';
-import { LEARN_DOCS }          from './data/learnDocs.js';
+import { api } from './api.js';
+import { LEARN_DOCS } from './data/learnDocs.js';
 import { restoreFormState, saveFormState } from './utils/localState.js';
 import { initChartDrawingOffcanvas } from './utils/chartDrawingOffcanvas.js';
 import { initAuth, recordUsage } from './auth.js';
 
-const app        = document.getElementById('app');
+const app = document.getElementById('app');
 const breadcrumb = document.getElementById('breadcrumb');
 const TOPBAR_MARKETS = ['^KS11', '^IXIC', 'KRW=X'];
 const TOPBAR_REFRESH_MS = 30_000;
@@ -170,12 +170,19 @@ function initGlobalSearch() {
   input.addEventListener('keydown', (event) => { if (event.key === 'Escape') close(); });
 }
 
-const learnRoutes = Object.fromEntries(
-  LEARN_DOCS.map((doc) => [
-    `learn-${doc.id}`,
-    { label: `학습 · ${doc.label}`, render: () => learnView(app, doc.id) },
-  ]),
-);
+// js/app.js에서 learnRoutes 부분 교체
+const learnRoutes = {
+  'learn-01': { label: '1단원 · 금융 데이터의 이해', render: () => learnView(app, '01') },
+  'learn-02': { label: '2단원 · RAG 아키텍처', render: () => learnView(app, '02') },
+  'learn-03': { label: '3단원 · DART 공시 분석', render: () => learnView(app, '03') },
+  'learn-04': { label: '4단원 · 산업 경쟁 구조', render: () => learnView(app, '04') },
+  'learn-05': { label: '5단원 · 재무제표 읽기', render: () => learnView(app, '05') },
+  'learn-06': { label: '6단원 · 밸류에이션', render: () => learnView(app, '06') },
+  'learn-07': { label: '7단원 · 분산투자와 리스크', render: () => learnView(app, '07') },
+  'learn-08': { label: '8단원 · 자산배분', render: () => learnView(app, '08') },
+  'learn-09': { label: '9단원 · 퀀트 백테스트', render: () => learnView(app, '09') },
+  'learn-10': { label: '10단원 · 실전 투자 전략', render: () => learnView(app, '10') },
+};
 
 const quizDayRoutes = Object.fromEntries(
   Array.from({ length: 5 }, (_, i) => i + 1).map(d => [
@@ -185,56 +192,56 @@ const quizDayRoutes = Object.fromEntries(
 );
 
 const routes = {
-  'home':              { label: '대시보드',               render: () => homeView(app, navigate) },
-  'server-resources':  { label: '서버 리소스',             render: () => serverResourcesView(app) },
-  'volume-cloud':     { label: '거래량 클라우드',          render: () => volumeCloudView(app) },
-  'sector-cloud':     { label: '섹터별 클라우드',          render: () => sectorCloudView(app) },
-  'world-markets':    { label: '세계증시현황',              render: () => worldMarketsView(app) },
-  'asset-classes':    { label: '다양한 기초자산 차트',       render: () => assetClassesView(app) },
-  'today-gainers':    { label: '금일 상승종목',              render: () => todayGainersView(app) },
-  'today-sobujang':   { label: '금일 소부장 종목',           render: () => todaySobujangView(app) },
-  'global-capital-map': { label: '세계 거대자금 지도',       render: () => globalCapitalMapView(app) },
-  'cross-validation':  { label: 'Cross Validation',       render: () => crossValidationView(app) },
-  'decision-boundary': { label: 'Decision Boundary',      render: () => decisionBoundaryView(app) },
-  'random-forest':     { label: 'Random Forest',          render: () => randomForestView(app) },
-  'kmeans':            { label: 'KMeans 클러스터링',       render: () => kmeansView(app) },
-  'svm':               { label: 'SVM 분류기',             render: () => svmView(app) },
-  'mlp':               { label: 'MLP 신경망',             render: () => mlpView(app) },
-  'linear-regression': { label: '선형 회귀',              render: () => linearRegressionView(app) },
-  'text-classify':     { label: '텍스트 분류 (TF-IDF)',   render: () => textClassifyView(app) },
-  'opencv':            { label: 'OpenCV 애니메이션',      render: () => opencvView(app) },
-  'cnn-timeseries':    { label: '1D CNN 시계열',          render: () => cnnTimeseriesView(app) },
-  'lstm':              { label: 'LSTM 예측기',            render: () => lstmView(app) },
-  'transformer':       { label: 'Transformer',            render: () => transformerView(app) },
-  'backtest':          { label: '백테스트 엔진',          render: () => backtestView(app) },
-  'quant-lean':        { label: 'Quant · LEAN 백테스트 리포트', render: () => quantView(app) },
-  'portfolio':         { label: '포트폴리오 최적화',      render: () => portfolioView(app) },
-  'portfolio-combination': { label: '포트폴리오 조합',    render: () => portfolioCombinationView(app) },
-  'portfolio-guide':       { label: '포트폴리오 추천',    render: () => portfolioGuideView(app) },
-  'portfolio-regime':      { label: '자산배분 위험선호도(R1~R5)', render: () => portfolioRegimeView(app) },
-  'portfolio-simulation':  { label: '포트폴리오 시뮬레이션', render: () => portfolioSimulationView(app) },
-  'pipeline':          { label: '퀀트 파이프라인',        render: () => pipelineView(app) },
-  'risk':              { label: '리스크 분석 (VaR)',       render: () => riskView(app) },
-  'huggingface':       { label: 'HuggingFace 이미지 생성', render: () => huggingfaceView(app) },
-  'macro-realtime':    { label: '거시경제현황 1 (실시간)',    render: () => macroRealtimeView(app) },
-  'macro-simulation':  { label: '거시경제현황 2 (시뮬레이션)', render: () => macroSimulationView(app) },
-  'kospi-excluded':    { label: 'KOSPI 제외 지수 분석',       render: () => kospiExcludedView(app) },
-  'industry-analysis': { label: '산업 경쟁력 분석',           render: () => industryAnalysisView(app) },
-  'company-financial':   { label: '기업 파이낸셜 분석',          render: () => companyFinancialView(app) },
-  'financial-statement': { label: '재무제표분석',              render: () => financialStatementView(app) },
-  'dart-company-search': { label: 'DART 상장기업 검색',        render: () => dartCompanySearchView(app) },
-  'dart-region-search':  { label: 'DART 지역·종사자수 조회',    render: () => dartRegionSearchView(app) },
-  'group-network':       { label: '그룹사 계열사 네트워크',      render: () => groupNetworkView(app) },
-  'valuation':           { label: '밸류에이션 실습',            render: () => valuationView(app) },
-  'technical-chart':     { label: '기술적 분석 실습',            render: () => technicalChartView(app) },
-  'financial-knowledge': { label: '금융상품·자산배분',           render: () => financialKnowledgeView(app) },
-  'investment-tree':     { label: '투자 성향 분석',              render: () => investmentTreeView(app) },
-  'tax-accounting':              { label: '세무·회계 시뮬레이션',         render: () => taxAccountingView(app) },
-  'dart-financial-analysis':    { label: 'DART 재무 AI 분석',             render: () => dartFinancialAnalysisView(app) },
-  'quiz-home':           { label: '퀴즈 · 통합 모의고사',        render: () => quizHomeView(app, navigate) },
-  'vocabulary-exam':     { label: '퀴즈 · 단어장 30문제 시험',   render: () => vocabularyExamView(app, navigate) },
-  'rag-chat':            { label: '문서 검색 채팅',              render: () => ragChatView(app) },
-  'llm-bench':           { label: 'LLM 서빙 방식 비교(AWS)',     render: () => llmBenchView(app) },
+  'home': { label: '대시보드', render: () => homeView(app, navigate) },
+  'server-resources': { label: '서버 리소스', render: () => serverResourcesView(app) },
+  'volume-cloud': { label: '거래량 클라우드', render: () => volumeCloudView(app) },
+  'sector-cloud': { label: '섹터별 클라우드', render: () => sectorCloudView(app) },
+  'world-markets': { label: '세계증시현황', render: () => worldMarketsView(app) },
+  'asset-classes': { label: '다양한 기초자산 차트', render: () => assetClassesView(app) },
+  'today-gainers': { label: '금일 상승종목', render: () => todayGainersView(app) },
+  'today-sobujang': { label: '금일 소부장 종목', render: () => todaySobujangView(app) },
+  'global-capital-map': { label: '세계 거대자금 지도', render: () => globalCapitalMapView(app) },
+  'cross-validation': { label: 'Cross Validation', render: () => crossValidationView(app) },
+  'decision-boundary': { label: 'Decision Boundary', render: () => decisionBoundaryView(app) },
+  'random-forest': { label: 'Random Forest', render: () => randomForestView(app) },
+  'kmeans': { label: 'KMeans 클러스터링', render: () => kmeansView(app) },
+  'svm': { label: 'SVM 분류기', render: () => svmView(app) },
+  'mlp': { label: 'MLP 신경망', render: () => mlpView(app) },
+  'linear-regression': { label: '선형 회귀', render: () => linearRegressionView(app) },
+  'text-classify': { label: '텍스트 분류 (TF-IDF)', render: () => textClassifyView(app) },
+  'opencv': { label: 'OpenCV 애니메이션', render: () => opencvView(app) },
+  'cnn-timeseries': { label: '1D CNN 시계열', render: () => cnnTimeseriesView(app) },
+  'lstm': { label: 'LSTM 예측기', render: () => lstmView(app) },
+  'transformer': { label: 'Transformer', render: () => transformerView(app) },
+  'backtest': { label: '백테스트 엔진', render: () => backtestView(app) },
+  'quant-lean': { label: 'Quant · LEAN 백테스트 리포트', render: () => quantView(app) },
+  'portfolio': { label: '포트폴리오 최적화', render: () => portfolioView(app) },
+  'portfolio-combination': { label: '포트폴리오 조합', render: () => portfolioCombinationView(app) },
+  'portfolio-guide': { label: '포트폴리오 추천', render: () => portfolioGuideView(app) },
+  'portfolio-regime': { label: '자산배분 위험선호도(R1~R5)', render: () => portfolioRegimeView(app) },
+  'portfolio-simulation': { label: '포트폴리오 시뮬레이션', render: () => portfolioSimulationView(app) },
+  'pipeline': { label: '퀀트 파이프라인', render: () => pipelineView(app) },
+  'risk': { label: '리스크 분석 (VaR)', render: () => riskView(app) },
+  'huggingface': { label: 'HuggingFace 이미지 생성', render: () => huggingfaceView(app) },
+  'macro-realtime': { label: '거시경제현황 1 (실시간)', render: () => macroRealtimeView(app) },
+  'macro-simulation': { label: '거시경제현황 2 (시뮬레이션)', render: () => macroSimulationView(app) },
+  'kospi-excluded': { label: 'KOSPI 제외 지수 분석', render: () => kospiExcludedView(app) },
+  'industry-analysis': { label: '산업 경쟁력 분석', render: () => industryAnalysisView(app) },
+  'company-financial': { label: '기업 파이낸셜 분석', render: () => companyFinancialView(app) },
+  'financial-statement': { label: '재무제표분석', render: () => financialStatementView(app) },
+  'dart-company-search': { label: 'DART 상장기업 검색', render: () => dartCompanySearchView(app) },
+  'dart-region-search': { label: 'DART 지역·종사자수 조회', render: () => dartRegionSearchView(app) },
+  'group-network': { label: '그룹사 계열사 네트워크', render: () => groupNetworkView(app) },
+  'valuation': { label: '밸류에이션 실습', render: () => valuationView(app) },
+  'technical-chart': { label: '기술적 분석 실습', render: () => technicalChartView(app) },
+  'financial-knowledge': { label: '금융상품·자산배분', render: () => financialKnowledgeView(app) },
+  'investment-tree': { label: '투자 성향 분석', render: () => investmentTreeView(app) },
+  'tax-accounting': { label: '세무·회계 시뮬레이션', render: () => taxAccountingView(app) },
+  'dart-financial-analysis': { label: 'DART 재무 AI 분석', render: () => dartFinancialAnalysisView(app) },
+  'quiz-home': { label: '퀴즈 · 통합 모의고사', render: () => quizHomeView(app, navigate) },
+  'vocabulary-exam': { label: '퀴즈 · 단어장 30문제 시험', render: () => vocabularyExamView(app, navigate) },
+  'rag-chat': { label: '문서 검색 채팅', render: () => ragChatView(app) },
+  'llm-bench': { label: 'LLM 서빙 방식 비교(AWS)', render: () => llmBenchView(app) },
   ...quizDayRoutes,
   ...learnRoutes,
 };
@@ -393,12 +400,12 @@ function navigate(view) {
   if (breadcrumb) breadcrumb.textContent = route.label;
 
   // 현재 화면이 속한 사이드바 섹션만 펼치고 나머지는 닫는다 (사용 중인 메뉴만 열림)
-  const _practiceViews = ['macro-realtime','macro-simulation','kospi-excluded','industry-analysis',
-    'dart-region-search','group-network','company-financial','financial-statement','valuation',
-    'risk','technical-chart','backtest','pipeline','cross-validation','random-forest',
-    'kmeans','svm','mlp','linear-regression','lstm','transformer','market-snapshot','financial-knowledge'];
+  const _practiceViews = ['macro-realtime', 'macro-simulation', 'kospi-excluded', 'industry-analysis',
+    'dart-region-search', 'group-network', 'company-financial', 'financial-statement', 'valuation',
+    'risk', 'technical-chart', 'backtest', 'pipeline', 'cross-validation', 'random-forest',
+    'kmeans', 'svm', 'mlp', 'linear-regression', 'lstm', 'transformer', 'market-snapshot', 'financial-knowledge'];
   const _portfolioViews = ['portfolio', 'portfolio-combination', 'portfolio-guide', 'portfolio-simulation'];
-  const _aiViews = ['dart-financial-analysis','dart-company-search','tax-accounting'];
+  const _aiViews = ['dart-financial-analysis', 'dart-company-search', 'tax-accounting'];
   const activeSections = [];
   if (['learn-10-1', 'learn-10-2', 'learn-10-3', 'learn-11'].includes(view)) activeSections.push('review');
   else if (view?.startsWith('learn-')) activeSections.push('learn');
@@ -444,14 +451,14 @@ document.querySelectorAll('[data-view="home"].brand').forEach((button) => {
 
 // Health check
 async function checkHealth() {
-  const dot  = document.getElementById('health-dot');
+  const dot = document.getElementById('health-dot');
   const text = document.getElementById('health-text');
   try {
     await api.health();
-    if (dot)  dot.style.background  = '#22c55e';
+    if (dot) dot.style.background = '#22c55e';
     if (text) text.textContent = '백엔드 연결됨';
   } catch {
-    if (dot)  dot.style.background  = '#ef4444';
+    if (dot) dot.style.background = '#ef4444';
     if (text) text.textContent = '백엔드 오프라인';
   }
 }
@@ -574,3 +581,54 @@ if (requestedView === 'chart-drawing') {
 } else {
   navigate(requestedView && routes[requestedView] ? requestedView : 'home');
 }
+
+// js/app.js 하단, initScreenCaptureAssistant() 호출 근처에 추가
+function initGNB() {
+  const gnbItems = document.querySelectorAll('.gnb-item');
+  const sectionMap = {
+    'home': 'home',
+    'learn': 'learn-01',       // 클릭 시 1단원으로 이동
+    'quiz': 'quiz-home',
+    'analysis': 'world-markets',
+    'portfolio': 'portfolio-combination',
+    'quant': 'quant-lean',
+    'rag': 'rag-chat',
+    'calendar': 'calendar',
+  };
+  gnbItems.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetView = sectionMap[btn.dataset.gnb];
+      if (targetView) navigate(targetView);
+    });
+  });
+}
+
+// navigate() 함수 내부에서 GNB 활성화도 함께 업데이트
+// 기존 navigate()의 active section 갱신 부분을 이렇게 확장
+function updateGNBActive(view) {
+  const gnbSectionMap = {
+    'home': 'home',
+    'learn-01': 'learn', 'learn-02': 'learn', 'learn-03': 'learn',
+    'learn-04': 'learn', 'learn-05': 'learn', 'learn-06': 'learn',
+    'learn-07': 'learn', 'learn-08': 'learn', 'learn-09': 'learn', 'learn-10': 'learn',
+    'quiz-home': 'quiz', 'vocabulary-exam': 'quiz', 'quiz-day-1': 'quiz',
+    'world-markets': 'analysis', 'today-gainers': 'analysis',
+    'industry-analysis': 'analysis', 'company-financial': 'analysis',
+    'valuation': 'analysis',
+    'portfolio-combination': 'portfolio', 'portfolio-guide': 'portfolio',
+    'portfolio-regime': 'portfolio', 'portfolio-simulation': 'portfolio',
+    'quant-lean': 'quant', 'pipeline': 'quant', 'risk': 'quant',
+    'rag-chat': 'rag',
+    'calendar': 'calendar',
+  };
+  const activeGNB = gnbSectionMap[view] || 'home';
+  document.querySelectorAll('.gnb-item').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.gnb === activeGNB);
+  });
+}
+
+// navigate() 내부의 `route.render();` 호출 직전에 추가
+// updateGNBActive(view);
+
+// Boot 섹션 근처에 initGNB() 호출
+initGNB();

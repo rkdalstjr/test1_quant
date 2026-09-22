@@ -1,14 +1,18 @@
 <!DOCTYPE html>
 <html lang="ko">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>주식상식 웹앱 — EDUMGT</title>
-  <link rel="preload" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
-  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link rel="preload" as="style" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
+  <link rel="stylesheet" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" />
-  <link rel="stylesheet" href="styles.css?v=26" />
+  <link rel="stylesheet" href="styles.css?v=27" />
 </head>
+
 <body>
 
   <!-- ── 모바일 오버레이 ── -->
@@ -28,29 +32,23 @@
   </div>
 
   <!-- ═══════════════════════════════════════════
-       TOPBAR
+       TOPBAR (유틸리티 바)
   ═══════════════════════════════════════════ -->
   <header class="topbar">
-    <button
-      id="sidebar-toggle"
-      class="topbar-toggle"
-      type="button"
-      onclick="toggleSidebar()"
-      aria-label="메뉴 열기"
-      aria-controls="sidebar"
-      aria-expanded="true"
-    >
+    <button id="sidebar-toggle" class="topbar-toggle" type="button" onclick="toggleSidebar()" aria-label="메뉴 열기"
+      aria-controls="sidebar" aria-expanded="true">
       <i class="fa-solid fa-bars"></i>
     </button>
 
     <button class="brand" type="button" onclick="navigate('home')" aria-label="대시보드로 이동">
       <span class="brand-mark">
         <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-          <rect x="1" y="10" width="3" height="9" rx="1" fill="#fff" opacity=".6"/>
-          <rect x="6" y="6"  width="3" height="13" rx="1" fill="#fff" opacity=".8"/>
-          <rect x="11" y="2" width="3" height="17" rx="1" fill="#fff"/>
-          <polyline points="1,10 6.5,6.5 11.5,2.5 16,5" stroke="#a5f3fc" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-          <circle cx="16" cy="5" r="1.5" fill="#a5f3fc"/>
+          <rect x="1" y="10" width="3" height="9" rx="1" fill="#fff" opacity=".6" />
+          <rect x="6" y="6" width="3" height="13" rx="1" fill="#fff" opacity=".8" />
+          <rect x="11" y="2" width="3" height="17" rx="1" fill="#fff" />
+          <polyline points="1,10 6.5,6.5 11.5,2.5 16,5" stroke="#a5f3fc" stroke-width="1.4" stroke-linecap="round"
+            stroke-linejoin="round" fill="none" />
+          <circle cx="16" cy="5" r="1.5" fill="#a5f3fc" />
         </svg>
       </span>
       <span class="brand-text">
@@ -83,7 +81,8 @@
       <i class="fa-solid fa-users" aria-hidden="true"></i><span>현재 접속 확인 중</span>
     </div>
 
-    <a id="health-indicator" class="health-badge health-docs-link" href="/docs" target="_new" rel="noopener noreferrer" aria-label="Swagger API 문서를 별도 창으로 열기" title="Swagger API 문서 열기">
+    <a id="health-indicator" class="health-badge health-docs-link" href="/docs" target="_new" rel="noopener noreferrer"
+      aria-label="Swagger API 문서를 별도 창으로 열기" title="Swagger API 문서 열기">
       <span id="health-dot" class="health-dot"></span>
       <span id="health-text" class="health-text">확인 중</span>
     </a>
@@ -94,11 +93,38 @@
   </header>
 
   <!-- ═══════════════════════════════════════════
+       GNB (Global Navigation Bar)
+  ═══════════════════════════════════════════ -->
+  <nav class="gnb" aria-label="주요 메뉴">
+    <button class="gnb-item active" data-gnb="home">
+      <i class="fa-solid fa-house"></i><span>홈</span>
+    </button>
+    <button class="gnb-item" data-gnb="learn">
+      <i class="fa-solid fa-book-open-reader"></i><span>10단원 학습</span>
+    </button>
+    <button class="gnb-item" data-gnb="analysis">
+      <i class="fa-solid fa-chart-line"></i><span>투자분석</span>
+    </button>
+    <button class="gnb-item" data-gnb="portfolio">
+      <i class="fa-solid fa-briefcase"></i><span>포트폴리오</span>
+    </button>
+    <button class="gnb-item" data-gnb="quant">
+      <i class="fa-solid fa-chart-simple"></i><span>퀀트</span>
+    </button>
+    <button class="gnb-item" data-gnb="rag">
+      <i class="fa-solid fa-comments"></i><span>RAG</span>
+    </button>
+    <button class="gnb-item" data-gnb="calendar">
+      <i class="fa-solid fa-calendar-days"></i><span>캘린더</span>
+    </button>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════
        LAYOUT SHELL
   ═══════════════════════════════════════════ -->
   <div class="layout">
 
-    <!-- ── LEFT SIDEBAR ── -->
+    <!-- ── LEFT SIDEBAR (LNB) ── -->
     <aside id="sidebar" class="sidebar" aria-label="메인 메뉴">
 
       <nav class="sidebar-nav">
@@ -107,60 +133,34 @@
         <a class="nav-item nav-home" data-view="home">
           <i class="fa-solid fa-house"></i><span>대시보드</span>
         </a>
-        <!-- ─────── 기초학습 ─────── -->
-        <div class="nav-section">
-          <button class="nav-section-hdr" onclick="toggleNav('review')">
-            <span><i class="fa-solid fa-book-bookmark"></i>기초학습</span>
-            <i class="fa-solid fa-chevron-down nav-chev" id="chev-review"></i>
-          </button>
-          <div class="nav-children" id="nav-review">
-            <a class="nav-item" data-view="learn-10-1"><i class="fa-solid fa-circle-dot"></i>법인과 회사 구조 1: 시작하기</a>
-            <a class="nav-item" data-view="learn-10-2"><i class="fa-solid fa-circle-dot"></i>법인과 회사 구조 2: 운영·자금</a>
-            <a class="nav-item" data-view="learn-10-3"><i class="fa-solid fa-circle-dot"></i>법인과 회사 구조 3: 세무·회계</a>
-            <a class="nav-item" data-view="learn-11"><i class="fa-solid fa-circle-dot"></i>거시경제와 주식시장</a>
-          </div>
-        </div>
 
-        <!-- ─────── 학습 ─────── -->
+        <!-- ─────── 10단원 학습 ─────── -->
         <div class="nav-section">
           <button class="nav-section-hdr" onclick="toggleNav('learn')">
-            <span><i class="fa-solid fa-book-open-reader"></i>학습</span>
+            <span><i class="fa-solid fa-book-open-reader"></i>10단원 학습</span>
             <i class="fa-solid fa-chevron-down nav-chev" id="chev-learn"></i>
           </button>
           <div class="nav-children" id="nav-learn">
-            <a class="nav-item" data-view="learn-03"><i class="fa-solid fa-circle-dot"></i>주식 1</a>
-            <a class="nav-item" data-view="learn-05"><i class="fa-solid fa-circle-dot"></i>주식 2<span class="nav-badge-hot">HOT</span></a>
-            <a class="nav-item" data-view="learn-04"><i class="fa-solid fa-circle-dot"></i>주식 3</a>
-            <a class="nav-item" data-view="learn-06"><i class="fa-solid fa-circle-dot"></i>주식 4</a>
-            <a class="nav-item" data-view="learn-07"><i class="fa-solid fa-circle-dot"></i>주식 5</a>
+            <a class="nav-item" data-view="learn-01"><i class="fa-solid fa-circle-dot"></i>1단원. 금융 데이터의 이해</a>
+            <a class="nav-item" data-view="learn-02"><i class="fa-solid fa-circle-dot"></i>2단원. RAG 아키텍처</a>
+            <a class="nav-item" data-view="learn-03"><i class="fa-solid fa-circle-dot"></i>3단원. DART 공시 분석</a>
+            <a class="nav-item" data-view="learn-04"><i class="fa-solid fa-circle-dot"></i>4단원. 산업 경쟁 구조</a>
+            <a class="nav-item" data-view="learn-05"><i class="fa-solid fa-circle-dot"></i>5단원. 재무제표 읽기</a>
+            <a class="nav-item" data-view="learn-06"><i class="fa-solid fa-circle-dot"></i>6단원. 밸류에이션</a>
+            <a class="nav-item" data-view="learn-07"><i class="fa-solid fa-circle-dot"></i>7단원. 분산투자와 리스크</a>
+            <a class="nav-item" data-view="learn-08"><i class="fa-solid fa-circle-dot"></i>8단원. 자산배분</a>
+            <a class="nav-item" data-view="learn-09"><i class="fa-solid fa-circle-dot"></i>9단원. 퀀트 백테스트</a>
+            <a class="nav-item" data-view="learn-10"><i class="fa-solid fa-circle-dot"></i>10단원. 실전 투자 전략</a>
           </div>
         </div>
 
-        <!-- ─────── 퀴즈 ─────── -->
+        <!-- ─────── 투자분석 (기존 데이터 시각화 통합) ─────── -->
         <div class="nav-section">
-          <button class="nav-section-hdr" onclick="toggleNav('quiz')">
-            <span><i class="fa-solid fa-circle-question"></i>퀴즈</span>
-            <i class="fa-solid fa-chevron-down nav-chev" id="chev-quiz"></i>
+          <button class="nav-section-hdr" onclick="toggleNav('analysis')">
+            <span><i class="fa-solid fa-chart-line"></i>투자분석</span>
+            <i class="fa-solid fa-chevron-down nav-chev" id="chev-analysis"></i>
           </button>
-          <div class="nav-children" id="nav-quiz">
-            <a class="nav-item" data-view="quiz-home"><i class="fa-solid fa-calendar-check"></i>문항 관리/응시</a>
-            <a class="nav-item" data-view="vocabulary-exam"><i class="fa-solid fa-spell-check"></i>단어장 30문제 시험</a>
-            <div class="nav-group-label">주식 모듈별 20문항</div>
-            <a class="nav-item" data-view="quiz-day-1"><i class="fa-solid fa-list-check"></i>주식 1</a>
-            <a class="nav-item" data-view="quiz-day-2"><i class="fa-solid fa-list-check"></i>주식 2</a>
-            <a class="nav-item" data-view="quiz-day-3"><i class="fa-solid fa-list-check"></i>주식 3</a>
-            <a class="nav-item" data-view="quiz-day-4"><i class="fa-solid fa-list-check"></i>주식 4</a>
-            <a class="nav-item" data-view="quiz-day-5"><i class="fa-solid fa-list-check"></i>주식 5</a>
-          </div>
-        </div>
-
-        <!-- ─────── 데이터 시각화 ─────── -->
-        <div class="nav-section">
-          <button class="nav-section-hdr" onclick="toggleNav('visualization')">
-            <span><i class="fa-solid fa-chart-pie"></i>데이터 시각화</span>
-            <i class="fa-solid fa-chevron-down nav-chev" id="chev-visualization"></i>
-          </button>
-          <div class="nav-children" id="nav-visualization">
+          <div class="nav-children" id="nav-analysis">
             <a class="nav-item" data-view="server-resources"><i class="fa-solid fa-server"></i>서버 리소스</a>
             <a class="nav-item" data-view="world-markets"><i class="fa-solid fa-earth-americas"></i>세계증시현황</a>
             <a class="nav-item" data-view="asset-classes"><i class="fa-solid fa-layer-group"></i>다양한 기초자산 차트</a>
@@ -169,6 +169,9 @@
             <a class="nav-item" data-view="global-capital-map"><i class="fa-solid fa-globe"></i>세계 거대자금 지도</a>
             <a class="nav-item" data-view="volume-cloud"><i class="fa-solid fa-cloud"></i>거래량 클라우드</a>
             <a class="nav-item" data-view="sector-cloud"><i class="fa-solid fa-cloud-arrow-up"></i>섹터별 클라우드</a>
+            <a class="nav-item" data-view="industry-analysis"><i class="fa-solid fa-industry"></i>산업 경쟁력 분석</a>
+            <a class="nav-item" data-view="company-financial"><i class="fa-solid fa-building"></i>기업 재무 분석</a>
+            <a class="nav-item" data-view="valuation"><i class="fa-solid fa-scale-balanced"></i>밸류에이션 실습</a>
           </div>
         </div>
 
@@ -181,24 +184,34 @@
           <div class="nav-children" id="nav-portfolio">
             <a class="nav-item" data-view="portfolio-combination"><i class="fa-solid fa-traffic-light"></i>포트폴리오 조합</a>
             <a class="nav-item" data-view="portfolio-guide"><i class="fa-solid fa-compass"></i>포트폴리오 추천</a>
-            <a class="nav-item" data-view="portfolio-regime"><i class="fa-solid fa-chart-diagram"></i>자산배분 위험선호도(R1~R5)</a>
+            <a class="nav-item" data-view="portfolio-regime"><i class="fa-solid fa-chart-diagram"></i>자산배분
+              위험선호도(R1~R5)</a>
             <a class="nav-item" data-view="portfolio-simulation"><i class="fa-solid fa-chart-area"></i>포트폴리오 시뮬레이션</a>
           </div>
         </div>
+
+        <!-- ─────── 퀀트 ─────── -->
         <div class="nav-section">
           <button class="nav-section-hdr" onclick="toggleNav('quant')">
-            <span><i class="fa-solid fa-chart-simple"></i>Quant</span>
+            <span><i class="fa-solid fa-chart-simple"></i>퀀트</span>
             <i class="fa-solid fa-chevron-down nav-chev" id="chev-quant"></i>
           </button>
           <div class="nav-children" id="nav-quant">
             <a class="nav-item" data-view="quant-lean"><i class="fa-solid fa-flask"></i>LEAN 백테스트 리포트</a>
+            <a class="nav-item" data-view="pipeline"><i class="fa-solid fa-diagram-project"></i>퀀트 파이프라인</a>
+            <a class="nav-item" data-view="risk"><i class="fa-solid fa-triangle-exclamation"></i>리스크 분석 (VaR)</a>
           </div>
         </div>
+
+        <!-- ─────── 단독 메뉴 ─────── -->
         <a class="nav-item" data-view="chart-drawing">
           <i class="fa-solid fa-pencil"></i><span>드로잉 차트</span>
         </a>
         <a class="nav-item" data-view="rag-chat">
-          <i class="fa-solid fa-comments"></i><span>RAG</span>
+          <i class="fa-solid fa-comments"></i><span>RAG 질문</span>
+        </a>
+        <a class="nav-item" data-view="calendar">
+          <i class="fa-solid fa-calendar-days"></i><span>캘린더</span>
         </a>
         <a class="nav-item" data-view="llm-bench">
           <i class="fa-solid fa-cloud-bolt"></i><span>LLM 서빙 비교(AWS)</span>
@@ -215,27 +228,39 @@
 
       <footer class="site-footer">
         <span class="footer-logo">EDUMGT</span>
-        <span class="footer-line">주식상식 웹앱 · (주)에듀엠지티 · 대표이사 김대표 · 사업자등록번호 000-00-00000 · info@edumgt.co.kr · © 2025 All rights reserved</span>
+        <span class="footer-line">주식상식 웹앱 · (주)에듀엠지티 · 대표이사 김대표 · 사업자등록번호 000-00-00000 · info@edumgt.co.kr · © 2025 All
+          rights reserved</span>
       </footer>
     </div>
 
   </div><!-- /.layout -->
 
-  <button type="button" id="screen-capture-fab" class="screen-capture-fab" aria-label="현재 화면 캡처하기" title="현재 화면을 캡처해 GPT에 질문하기" data-html2canvas-ignore="true">
+  <button type="button" id="screen-capture-fab" class="screen-capture-fab" aria-label="현재 화면 캡처하기"
+    title="현재 화면을 캡처해 GPT에 질문하기" data-html2canvas-ignore="true">
     <i class="fa-solid fa-camera"></i><span>캡처하기</span>
   </button>
-  <section id="screen-capture-panel" class="screen-capture-panel" aria-live="polite" hidden data-html2canvas-ignore="true">
-    <div class="screen-capture-panel-head"><strong><i class="fa-solid fa-image"></i> 캡처 완료</strong><button type="button" data-capture-close aria-label="캡처 패널 닫기"><i class="fa-solid fa-xmark"></i></button></div>
+  <section id="screen-capture-panel" class="screen-capture-panel" aria-live="polite" hidden
+    data-html2canvas-ignore="true">
+    <div class="screen-capture-panel-head"><strong><i class="fa-solid fa-image"></i> 캡처 완료</strong><button type="button"
+        data-capture-close aria-label="캡처 패널 닫기"><i class="fa-solid fa-xmark"></i></button></div>
     <img data-capture-preview alt="현재 화면 캡처 미리보기">
     <p data-capture-status>이미지를 준비하고 있습니다.</p>
-    <label>질문할 GPT 웹<select data-capture-service><option value="https://chatgpt.com/">ChatGPT</option><option value="https://claude.ai/new">Claude</option><option value="https://gemini.google.com/app">Gemini</option></select></label>
-    <button type="button" class="screen-capture-open" data-capture-open><i class="fa-solid fa-arrow-up-right-from-square"></i> GPT에서 질문하기</button>
-    <div class="screen-capture-actions"><button type="button" data-capture-copy><i class="fa-regular fa-copy"></i> 이미지 다시 복사</button><button type="button" data-capture-download><i class="fa-solid fa-download"></i> PNG 저장</button></div>
+    <label>질문할 GPT 웹<select data-capture-service>
+        <option value="https://chatgpt.com/">ChatGPT</option>
+        <option value="https://claude.ai/new">Claude</option>
+        <option value="https://gemini.google.com/app">Gemini</option>
+      </select></label>
+    <button type="button" class="screen-capture-open" data-capture-open><i
+        class="fa-solid fa-arrow-up-right-from-square"></i> GPT에서 질문하기</button>
+    <div class="screen-capture-actions"><button type="button" data-capture-copy><i class="fa-regular fa-copy"></i> 이미지
+        다시 복사</button><button type="button" data-capture-download><i class="fa-solid fa-download"></i> PNG 저장</button>
+    </div>
   </section>
 
   <script src="https://cdn.jsdelivr.net/npm/apexcharts@3.54.0/dist/apexcharts.min.js"></script>
   <script src="vendor/mermaid.min.js?v=11.16.0"></script>
-  <script type="module" src="js/app.js?v=35"></script>
-  <script src="js/sidebarUI.js?v=3"></script>
+  <script type="module" src="js/app.js?v=36"></script>
+  <script src="js/sidebarUI.js?v=4"></script>
 </body>
+
 </html>
