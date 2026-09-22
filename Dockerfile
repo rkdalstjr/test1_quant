@@ -27,8 +27,6 @@ COPY scripts/sync_learning_menu.py ./scripts/sync_learning_menu.py
 COPY scripts/build_sidebar_partial.py ./scripts/build_sidebar_partial.py
 COPY scripts/index_docs_meilisearch.py ./scripts/index_docs_meilisearch.py
 RUN chmod +x ./scripts/upload_docs_to_qdrant.sh \
-    && python ./scripts/sync_learning_menu.py \
-    && python ./scripts/build_sidebar_partial.py
 
 EXPOSE 8000
 
